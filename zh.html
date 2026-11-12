@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23A85F35'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial' font-size='30' font-weight='bold' fill='white' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <title>HairZen · 先看效果，再决定剪不剪</title>
-<meta name="description" content="HairZen 是你的私人 AI 发型助理：先读你的脸型，再把真实发型渲染到你的照片上。理发前，先把结果看清楚。">
-<meta property="og:title" content="HairZen · 你的私人发型助理">
+<meta name="description" content="先看效果，再决定剪不剪。">
+<meta property="og:title" content="HairZen · 先看效果，再决定剪不剪">
 <meta property="og:description" content="先看效果，再决定剪不剪。">
 <meta property="og:image" content="./assets/hero-duo.jpg">
-<style>
-  :root {
+<style>:root {
     --paper: #FBF7F2;
     --paper-2: #F4ECE2;
     --ink: #241E19;
@@ -27,12 +26,13 @@
     margin: 0;
     background: var(--paper);
     color: var(--ink);
-    font: 17px/1.8 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font: 17px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 
+  /* ---------- nav ---------- */
   nav {
     position: sticky; top: 0; z-index: 20;
     backdrop-filter: saturate(160%) blur(12px);
@@ -54,17 +54,18 @@
   .lang-pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--muted); text-decoration: none; }
   .lang-pill:hover { color: var(--ink); border-color: var(--muted); }
 
+  /* ---------- hero ---------- */
   .hero { padding: 88px 0 64px; }
   .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
-  .eyebrow { font-size: 13px; letter-spacing: .18em; color: var(--brand); font-weight: 600; margin: 0 0 18px; }
+  .eyebrow { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--brand); font-weight: 600; margin: 0 0 18px; }
   h1 {
     margin: 0 0 22px;
-    font-size: clamp(36px, 4.4vw, 60px);
-    line-height: 1.15;
-    letter-spacing: -.02em;
+    font-size: clamp(38px, 4.6vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -.025em;
     font-weight: 700;
   }
-  .lede { margin: 0 0 32px; font-size: 18px; line-height: 1.8; color: var(--ink-2); max-width: 34em; }
+  .lede { margin: 0 0 32px; font-size: 19px; line-height: 1.65; color: var(--ink-2); max-width: 46ch; }
   .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
   .btn-primary {
     display: inline-flex; align-items: center; gap: 10px;
@@ -80,15 +81,17 @@
   .facts span { display: inline-flex; align-items: center; gap: 8px; }
   .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand); display: inline-block; }
 
+  .hero-shot { position: relative; }
   .hero-shot img {
     width: 100%; display: block; border-radius: var(--radius);
     box-shadow: 0 30px 70px rgba(58, 41, 28, .18);
   }
 
+  /* ---------- sections ---------- */
   section { padding: 84px 0; }
   .section-head { max-width: 62ch; margin: 0 0 48px; }
-  h2 { font-size: clamp(26px, 2.8vw, 38px); line-height: 1.25; letter-spacing: -.01em; margin: 0 0 14px; }
-  .section-head p { margin: 0; color: var(--muted); font-size: 16px; }
+  h2 { font-size: clamp(28px, 3vw, 40px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 14px; }
+  .section-head p { margin: 0; color: var(--muted); font-size: 17px; }
   .band { background: var(--paper-2); }
 
   .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
@@ -98,8 +101,8 @@
     transition: transform .25s ease, box-shadow .25s ease;
   }
   .feature:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(58, 41, 28, .10); }
-  .feature h3 { font-size: 19px; margin: 0 0 10px; }
-  .feature p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+  .feature h3 { font-size: 20px; margin: 0 0 10px; letter-spacing: -.01em; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
   .feature img {
     width: 150px; height: 200px; object-fit: cover; object-position: top center;
     border-radius: 18px; display: block;
@@ -107,7 +110,7 @@
   }
 
   .showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; align-items: start; }
-  .shot { text-align: center; margin: 0; }
+  .shot { text-align: center; }
   .shot img {
     width: 100%; border-radius: 26px; display: block;
     border: 1px solid var(--line);
@@ -126,13 +129,14 @@
   .privacy-list { margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
   .privacy-list li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
   .privacy-list li:last-child { border-bottom: 0; }
-  .privacy-list li span:first-child { color: var(--brand); font-weight: 600; flex: 0 0 auto; }
   .link-inline { color: var(--brand); text-decoration: none; font-weight: 600; font-size: 15px; }
   .link-inline:hover { text-decoration: underline; }
 
-  .cta { text-align: center; padding: 80px 0 96px; }
-  .cta h2 { max-width: 18em; margin: 0 auto 16px; }
-  .cta p { color: var(--muted); margin: 0 auto 32px; max-width: 30em; }
+  .cta {
+    text-align: center; padding: 80px 0 96px;
+  }
+  .cta h2 { max-width: 20ch; margin: 0 auto 16px; }
+  .cta p { color: var(--muted); margin: 0 auto 32px; max-width: 44ch; }
   .store-note { display: block; margin-top: 18px; font-size: 13px; color: var(--muted); }
 
   footer { border-top: 1px solid var(--line); padding: 36px 0 44px; font-size: 14px; color: var(--muted); }
@@ -141,6 +145,7 @@
   .foot-links a { text-decoration: none; }
   .foot-links a:hover { color: var(--ink); }
 
+  /* 滚动淡入（克制：12px / 0.55s） */
   .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; }
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
@@ -164,6 +169,28 @@
     .shot:nth-child(2) { margin-top: 0; }
     .cta { padding: 60px 0 72px; }
   }
+  /* 语言下拉 */
+  .langmenu { position: relative; }
+  .langmenu summary {
+    list-style: none; cursor: pointer; border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 14px; font-size: 13px; color: var(--muted); user-select: none;
+  }
+  .langmenu summary::-webkit-details-marker { display: none; }
+  .langmenu[open] summary { color: var(--ink); border-color: var(--muted); }
+  .langmenu-list {
+    position: absolute; right: 0; top: calc(100% + 8px); z-index: 30;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(58, 41, 28, .12); padding: 6px; min-width: 156px;
+  }
+  .langmenu-list a {
+    display: block; padding: 8px 12px; border-radius: 10px;
+    text-decoration: none; font-size: 14px; color: var(--ink-2);
+  }
+  .langmenu-list a:hover { background: var(--paper-2); }
+  .langmenu-list a.active { color: var(--brand); font-weight: 600; }
+  .foot-langs { display: flex; flex-wrap: wrap; gap: 14px; }
+  .foot-langs a { text-decoration: none; font-size: 13px; }
+  .foot-langs a.active { color: var(--ink); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -176,7 +203,10 @@
       <a href="#privacy">隐私</a>
       <a href="./support/index.html">支持</a>
     </div>
-    <a class="lang-pill" href="./index.html">EN</a>
+    <details class="langmenu">
+      <summary>中文</summary>
+      <div class="langmenu-list"><a href="./index.html">English</a><a href="./zh.html" class="active">中文</a><a href="./ja.html">日本語</a><a href="./ko.html">한국어</a><a href="./de.html">Deutsch</a><a href="./fr.html">Français</a></div>
+    </details>
     <a class="nav-cta" href="https://apps.apple.com/app/id6824493624">下载 App</a>
   </div>
 </nav>
@@ -250,7 +280,7 @@
     </div>
     <div class="showcase">
       <figure class="shot reveal">
-        <img src="./assets/shot-scan.jpg" alt="本机脸型分析" loading="lazy">
+        <img src="./assets/shot-scan.jpg" alt="脸型分析" loading="lazy">
         <figcaption>一 · 检测（仅在本机）</figcaption>
       </figure>
       <figure class="shot reveal">
@@ -258,7 +288,7 @@
         <figcaption>二 · 生成（一两分钟）</figcaption>
       </figure>
       <figure class="shot reveal">
-        <img src="./assets/shot-render.jpg" alt="生成结果" loading="lazy">
+        <img src="./assets/shot-render.jpg" alt="AI 渲染结果" loading="lazy">
         <figcaption>三 · 对比（保存或微调）</figcaption>
       </figure>
     </div>
@@ -285,7 +315,7 @@
 
 <section class="cta">
   <div class="wrap reveal">
-    <h2>用眼睛做决定，而不是靠胆子。</h2>
+    <h2>用眼睛做决定，<br>而不是靠胆子。</h2>
     <p>先在自己照片上试一次。免费开始，不需要订阅。</p>
     <a class="btn-primary" href="https://apps.apple.com/app/id6824493624">在 App Store 下载</a>
     <span class="store-note">支持 iOS 17 及以上 · iPhone 与折叠屏 · 六种语言</span>
@@ -299,8 +329,8 @@
       <a href="./privacy/index.html">隐私说明</a>
       <a href="./support/index.html">技术支持</a>
       <a href="mailto:ayningai@outlook.com">联系我们</a>
-      <a href="./index.html">EN</a>
     </div>
+    <div class="foot-langs"><a href="./index.html">English</a><a href="./zh.html" class="active">中文</a><a href="./ja.html">日本語</a><a href="./ko.html">한국어</a><a href="./de.html">Deutsch</a><a href="./fr.html">Français</a></div>
     <div>© 2026 HairZen</div>
   </div>
 </footer>

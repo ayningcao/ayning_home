@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23A85F35'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial' font-size='30' font-weight='bold' fill='white' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<title>HairZen — 切る前に、仕上がりを確かめる</title>
+<meta name="description" content="美容室へ行く前に、自分の写真で仕上がりを確かめられます。">
+<meta property="og:title" content="HairZen — 切る前に、仕上がりを確かめる">
+<meta property="og:description" content="美容室へ行く前に、自分の写真で仕上がりを確かめられます。">
+<meta property="og:image" content="./assets/hero-duo.jpg">
+<style>:root {
+    --paper: #FBF7F2;
+    --paper-2: #F4ECE2;
+    --ink: #241E19;
+    --ink-2: #4A3F36;
+    --muted: #7A6A5C;
+    --line: #E7DACB;
+    --brand: #A85F35;
+    --radius: 24px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 17px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: saturate(160%) blur(12px);
+    background: rgba(251, 247, 242, .82);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .logo { font-weight: 700; letter-spacing: .14em; font-size: 15px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 24px; margin-left: auto; font-size: 14px; color: var(--muted); }
+  .nav-links a { text-decoration: none; transition: color .2s ease; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 999px;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .nav-cta:hover { transform: translateY(-1px); background: #3A3029; }
+  .lang-pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .lang-pill:hover { color: var(--ink); border-color: var(--muted); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 88px 0 64px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .eyebrow { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--brand); font-weight: 600; margin: 0 0 18px; }
+  h1 {
+    margin: 0 0 22px;
+    font-size: clamp(38px, 4.6vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -.025em;
+    font-weight: 700;
+  }
+  .lede { margin: 0 0 32px; font-size: 19px; line-height: 1.65; color: var(--ink-2); max-width: 46ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--brand); color: #fff; text-decoration: none;
+    font-size: 16px; font-weight: 600; padding: 15px 28px; border-radius: 999px;
+    transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 10px 26px rgba(168, 95, 53, .22);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(168, 95, 53, .28); }
+  .btn-ghost { color: var(--ink-2); text-decoration: none; font-size: 15px; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .btn-ghost:hover { border-color: var(--muted); }
+  .facts { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; font-size: 13px; color: var(--muted); }
+  .facts span { display: inline-flex; align-items: center; gap: 8px; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand); display: inline-block; }
+
+  .hero-shot { position: relative; }
+  .hero-shot img {
+    width: 100%; display: block; border-radius: var(--radius);
+    box-shadow: 0 30px 70px rgba(58, 41, 28, .18);
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 84px 0; }
+  .section-head { max-width: 62ch; margin: 0 0 48px; }
+  h2 { font-size: clamp(28px, 3vw, 40px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 14px; }
+  .section-head p { margin: 0; color: var(--muted); font-size: 17px; }
+  .band { background: var(--paper-2); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+  .feature {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 34px 32px; display: grid; grid-template-columns: 1fr 150px; gap: 20px; align-items: end;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .feature:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(58, 41, 28, .10); }
+  .feature h3 { font-size: 20px; margin: 0 0 10px; letter-spacing: -.01em; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+  .feature img {
+    width: 150px; height: 200px; object-fit: cover; object-position: top center;
+    border-radius: 18px; display: block;
+    box-shadow: 0 12px 30px rgba(58, 41, 28, .16);
+  }
+
+  .showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; align-items: start; }
+  .shot { text-align: center; }
+  .shot img {
+    width: 100%; border-radius: 26px; display: block;
+    border: 1px solid var(--line);
+    box-shadow: 0 22px 54px rgba(58, 41, 28, .14);
+  }
+  .shot figcaption { margin-top: 16px; font-size: 14px; color: var(--muted); }
+  .shot:nth-child(2) { margin-top: 34px; }
+
+  .privacy-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: linear-gradient(140deg, #fff 0%, #FBF3EA 100%);
+    padding: 44px 44px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: center;
+  }
+  .privacy-band h2 { font-size: clamp(24px, 2.4vw, 32px); margin-bottom: 12px; }
+  .privacy-band p { margin: 0 0 18px; color: var(--ink-2); font-size: 16px; }
+  .privacy-list { margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
+  .privacy-list li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .privacy-list li:last-child { border-bottom: 0; }
+  .link-inline { color: var(--brand); text-decoration: none; font-weight: 600; font-size: 15px; }
+  .link-inline:hover { text-decoration: underline; }
+
+  .cta {
+    text-align: center; padding: 80px 0 96px;
+  }
+  .cta h2 { max-width: 20ch; margin: 0 auto 16px; }
+  .cta p { color: var(--muted); margin: 0 auto 32px; max-width: 44ch; }
+  .store-note { display: block; margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 44px; font-size: 14px; color: var(--muted); }
+  .foot-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; }
+  .foot-links a { text-decoration: none; }
+  .foot-links a:hover { color: var(--ink); }
+
+  /* 滚动淡入（克制：12px / 0.55s） */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 960px) {
+    .hero { padding: 56px 0 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .showcase { grid-template-columns: 1fr 1fr; }
+    .privacy-band { grid-template-columns: 1fr; padding: 32px; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 620px) {
+    section { padding: 60px 0; }
+    .feature { grid-template-columns: 1fr; }
+    .feature img { width: 132px; margin: 0 auto; }
+    .showcase { grid-template-columns: 1fr; }
+    .shot:nth-child(2) { margin-top: 0; }
+    .cta { padding: 60px 0 72px; }
+  }
+  /* 语言下拉 */
+  .langmenu { position: relative; }
+  .langmenu summary {
+    list-style: none; cursor: pointer; border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 14px; font-size: 13px; color: var(--muted); user-select: none;
+  }
+  .langmenu summary::-webkit-details-marker { display: none; }
+  .langmenu[open] summary { color: var(--ink); border-color: var(--muted); }
+  .langmenu-list {
+    position: absolute; right: 0; top: calc(100% + 8px); z-index: 30;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(58, 41, 28, .12); padding: 6px; min-width: 156px;
+  }
+  .langmenu-list a {
+    display: block; padding: 8px 12px; border-radius: 10px;
+    text-decoration: none; font-size: 14px; color: var(--ink-2);
+  }
+  .langmenu-list a:hover { background: var(--paper-2); }
+  .langmenu-list a.active { color: var(--brand); font-weight: 600; }
+  .foot-langs { display: flex; flex-wrap: wrap; gap: 14px; }
+  .foot-langs a { text-decoration: none; font-size: 13px; }
+  .foot-langs a.active { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="./ja.html" style="text-decoration:none;"><div class="logo">HairZen</div></a>
+    <div class="nav-links">
+      <a href="#features">機能</a>
+      <a href="#privacy">プライバシー</a>
+      <a href="./support/ja.html">サポート</a>
+    </div>
+    <details class="langmenu">
+      <summary>JA</summary>
+      <div class="langmenu-list"><a href="./index.html">English</a><a href="./zh.html">中文</a><a href="./ja.html" class="active">日本語</a><a href="./ko.html">한국어</a><a href="./de.html">Deutsch</a><a href="./fr.html">Français</a></div>
+    </details>
+    <a class="nav-cta" href="https://apps.apple.com/app/id6824493624">アプリを入手</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">あなた専用のAIヘアスタイリスト</p>
+      <h1>切る前に、<br>仕上がりを確かめる。</h1>
+      <p class="lede">HairZen は顔型を読み取り、選んだヘアスタイルをあなたの写真にリアルに描き出します。予約の前に、本当に似合うかどうかを自分の目で。</p>
+      <div class="actions">
+        <a class="btn-primary" href="https://apps.apple.com/app/id6824493624">App Store でダウンロード</a>
+        <a class="btn-ghost" href="#features">できることを見る</a>
+      </div>
+      <div class="facts">
+        <span><i class="dot"></i>無料で試せる</span>
+        <span><i class="dot"></i>iPhone・折りたたみ対応</span>
+        <span><i class="dot"></i>顔型解析は端末内で</span>
+      </div>
+    </div>
+    <div class="hero-shot">
+      <img src="./assets/hero-duo.jpg" alt="折りたたみ端末での HairZen" loading="eager">
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>フィルターではなく、ヘアスタイルの相談相手。</h2>
+      <p>どの生成も「その変化を本当にすべきか」を判断するために。</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div>
+          <h3>貼り付けではなく、リアルな仕上がり</h3>
+          <p>生成モデルが写真の髪を描き直します。光や肌色、髪質は元の写真に合わせるので、不自然な「別の誰か」にはなりません。</p>
+        </div>
+        <img src="./assets/shot-render.jpg" alt="AIの仕上がり" loading="lazy">
+      </div>
+      <div class="feature reveal">
+        <div>
+          <h3>まず顔型を知る</h3>
+          <p>端末内で顎・頬骨・生え際のバランスを測り、本当に似合うスタイルを提案します。</p>
+        </div>
+        <img src="./assets/shot-scan.jpg" alt="顔型分析" loading="lazy">
+      </div>
+      <div class="feature reveal">
+        <div>
+          <h3>予約前に見て回る</h3>
+          <p>レディース・メンズ・遊び心のあるスタイルを分類し、「似合う理由」も添えています。</p>
+        </div>
+        <img src="./assets/shot-gallery.jpg" alt="ヘアスタイル一覧" loading="lazy">
+      </div>
+      <div class="feature reveal">
+        <div>
+          <h3>動きまで確認</h3>
+          <p>仕上がりを短い回転動画にして、横や後ろからの見え方も確認できます。</p>
+        </div>
+        <img src="./assets/shot-video.jpg" alt="ヘアスタイル動画" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>写真からプレビューまで、3ステップ。</h2>
+      <p>スタイルを選んで元の写真を使うだけ。通常1〜2分で仕上がり、途中でページを離れても処理は続きます。</p>
+    </div>
+    <div class="showcase">
+      <figure class="shot reveal">
+        <img src="./assets/shot-scan.jpg" alt="顔型分析" loading="lazy">
+        <figcaption>1 · 検出（端末内のみ）</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="./assets/shot-progress.jpg" alt="生成中" loading="lazy">
+        <figcaption>2 · 生成（1〜2分）</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="./assets/shot-render.jpg" alt="AIの仕上がり" loading="lazy">
+        <figcaption>3 · 見比べる（保存・微調整）</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap">
+    <div class="privacy-band reveal">
+      <div>
+        <h2>あなたの顔は、あなたのもの。</h2>
+        <p>顔検出と顔型解析は iPhone 上で行います。写真が送信されるのは、あなたが生成を指示したときだけ。その生成にのみ使い、サーバーに長期保存しません。</p>
+        <a class="link-inline" href="./privacy/ja.html">プライバシー通知を読む →</a>
+      </div>
+      <ul class="privacy-list">
+        <li><span>端末内</span><span>検出と解析は送信しません</span></li>
+        <li><span>任意</span><span>「生成」を押したときだけ送信</span></li>
+        <li><span>一時的</span><span>元写真と結果は長期保存しません</span></li>
+        <li><span>学習なし</span><span>写真をモデル学習に使いません</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap reveal">
+    <h2>度胸ではなく、<br>目で決める。</h2>
+    <p>まずは自分の写真で一度試してみてください。無料で始められ、サブスクリプションは不要です。</p>
+    <a class="btn-primary" href="https://apps.apple.com/app/id6824493624">App Store でダウンロード</a>
+    <span class="store-note">iOS 17 以降 · iPhone・折りたたみ対応 · 6言語</span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="logo">HairZen</div>
+    <div class="foot-links">
+      <a href="./privacy/ja.html">プライバシー</a>
+      <a href="./support/ja.html">サポート</a>
+      <a href="mailto:ayningai@outlook.com">お問い合わせ</a>
+    </div>
+    <div class="foot-langs"><a href="./index.html">English</a><a href="./zh.html">中文</a><a href="./ja.html" class="active">日本語</a><a href="./ko.html">한국어</a><a href="./de.html">Deutsch</a><a href="./fr.html">Français</a></div>
+    <div>© 2026 HairZen</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    for (var i = 0; i < items.length; i++) items[i].classList.add('in');
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  items.forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>
