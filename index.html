@@ -1,16 +1,37 @@
 <!doctype html>
-<html lang="zh-Hans">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=./privacy.html">
-  <title>HairZen · Privacy Notice</title>
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fffaf5; color: #3f3027; font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    a { color: #c97b4a; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HairZen · Privacy Notice & Technical Support</title>
+<style>
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#fffaf5; color:#3f3027; font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; text-align:center; }
+  a { color:#c97b4a; }
+  .links { line-height:2.2; }
+</style>
 </head>
 <body>
-  <p>正在打开隐私说明… <a href="./privacy.html">Privacy Notice / 隐私说明</a></p>
+<div>
+  <div style="font-weight:800;color:#c97b4a;letter-spacing:2px;">HairZen</div>
+  <div class="links">
+    <p><b>Privacy Notice / 隐私说明</b><br>
+      <a href="./privacy/index.html">中文</a> · <a href="./privacy/en.html">English</a> · <a href="./privacy/ja.html">日本語</a> · <a href="./privacy/ko.html">한국어</a> · <a href="./privacy/de.html">Deutsch</a> · <a href="./privacy/fr.html">Français</a></p>
+    <p><b>Technical Support / 技术支持</b><br>
+      <a href="./support/index.html">中文</a> · <a href="./support/en.html">English</a> · <a href="./support/ja.html">日本語</a> · <a href="./support/ko.html">한국어</a> · <a href="./support/de.html">Deutsch</a> · <a href="./support/fr.html">Français</a></p>
+  </div>
+</div>
+<script>
+(function () {
+  var l = (navigator.language || '').toLowerCase();
+  var lang = l.indexOf('zh') === 0 ? 'index.html'
+    : l.indexOf('ja') === 0 ? 'ja.html'
+    : l.indexOf('ko') === 0 ? 'ko.html'
+    : l.indexOf('de') === 0 ? 'de.html'
+    : l.indexOf('fr') === 0 ? 'fr.html'
+    : 'en.html';
+  var p = (location.pathname.split('/').pop() || 'index.html');
+  if (p === '' || p === 'index.html') location.replace('./privacy/' + lang);
+})();
+</script>
 </body>
 </html>
