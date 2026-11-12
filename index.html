@@ -3,34 +3,330 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HairZen · Privacy Notice & Technical Support</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23A85F35'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial' font-size='30' font-weight='bold' fill='white' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<title>HairZen — See the haircut before you sit in the chair</title>
+<meta name="description" content="HairZen is a personal AI hairstylist. It reads your face shape and renders real-looking styles on your own photo — decide first, then book.">
+<meta property="og:title" content="HairZen — Your personal hairstyle assistant">
+<meta property="og:description" content="See real-looking hairstyles on your own photo before you sit in the chair.">
+<meta property="og:image" content="./assets/hero-duo.jpg">
 <style>
-  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#fffaf5; color:#3f3027; font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; text-align:center; }
-  a { color:#c97b4a; }
-  .links { line-height:2.2; }
+  :root {
+    --paper: #FBF7F2;
+    --paper-2: #F4ECE2;
+    --ink: #241E19;
+    --ink-2: #4A3F36;
+    --muted: #7A6A5C;
+    --line: #E7DACB;
+    --brand: #A85F35;
+    --radius: 24px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 17px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: saturate(160%) blur(12px);
+    background: rgba(251, 247, 242, .82);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .logo { font-weight: 700; letter-spacing: .14em; font-size: 15px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 24px; margin-left: auto; font-size: 14px; color: var(--muted); }
+  .nav-links a { text-decoration: none; transition: color .2s ease; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: #fff; text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 999px;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .nav-cta:hover { transform: translateY(-1px); background: #3A3029; }
+  .lang-pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .lang-pill:hover { color: var(--ink); border-color: var(--muted); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 88px 0 64px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .eyebrow { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--brand); font-weight: 600; margin: 0 0 18px; }
+  h1 {
+    margin: 0 0 22px;
+    font-size: clamp(38px, 4.6vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -.025em;
+    font-weight: 700;
+  }
+  .lede { margin: 0 0 32px; font-size: 19px; line-height: 1.65; color: var(--ink-2); max-width: 46ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--brand); color: #fff; text-decoration: none;
+    font-size: 16px; font-weight: 600; padding: 15px 28px; border-radius: 999px;
+    transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 10px 26px rgba(168, 95, 53, .22);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(168, 95, 53, .28); }
+  .btn-ghost { color: var(--ink-2); text-decoration: none; font-size: 15px; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .btn-ghost:hover { border-color: var(--muted); }
+  .facts { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; font-size: 13px; color: var(--muted); }
+  .facts span { display: inline-flex; align-items: center; gap: 8px; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand); display: inline-block; }
+
+  .hero-shot { position: relative; }
+  .hero-shot img {
+    width: 100%; display: block; border-radius: var(--radius);
+    box-shadow: 0 30px 70px rgba(58, 41, 28, .18);
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 84px 0; }
+  .section-head { max-width: 62ch; margin: 0 0 48px; }
+  h2 { font-size: clamp(28px, 3vw, 40px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 14px; }
+  .section-head p { margin: 0; color: var(--muted); font-size: 17px; }
+  .band { background: var(--paper-2); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+  .feature {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 34px 32px; display: grid; grid-template-columns: 1fr 150px; gap: 20px; align-items: end;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .feature:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(58, 41, 28, .10); }
+  .feature h3 { font-size: 20px; margin: 0 0 10px; letter-spacing: -.01em; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+  .feature img {
+    width: 150px; height: 200px; object-fit: cover; object-position: top center;
+    border-radius: 18px; display: block;
+    box-shadow: 0 12px 30px rgba(58, 41, 28, .16);
+  }
+
+  .showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; align-items: start; }
+  .shot { text-align: center; }
+  .shot img {
+    width: 100%; border-radius: 26px; display: block;
+    border: 1px solid var(--line);
+    box-shadow: 0 22px 54px rgba(58, 41, 28, .14);
+  }
+  .shot figcaption { margin-top: 16px; font-size: 14px; color: var(--muted); }
+  .shot:nth-child(2) { margin-top: 34px; }
+
+  .privacy-band {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: linear-gradient(140deg, #fff 0%, #FBF3EA 100%);
+    padding: 44px 44px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: center;
+  }
+  .privacy-band h2 { font-size: clamp(24px, 2.4vw, 32px); margin-bottom: 12px; }
+  .privacy-band p { margin: 0 0 18px; color: var(--ink-2); font-size: 16px; }
+  .privacy-list { margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
+  .privacy-list li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .privacy-list li:last-child { border-bottom: 0; }
+  .link-inline { color: var(--brand); text-decoration: none; font-weight: 600; font-size: 15px; }
+  .link-inline:hover { text-decoration: underline; }
+
+  .cta {
+    text-align: center; padding: 80px 0 96px;
+  }
+  .cta h2 { max-width: 20ch; margin: 0 auto 16px; }
+  .cta p { color: var(--muted); margin: 0 auto 32px; max-width: 44ch; }
+  .store-note { display: block; margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 44px; font-size: 14px; color: var(--muted); }
+  .foot-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; }
+  .foot-links a { text-decoration: none; }
+  .foot-links a:hover { color: var(--ink); }
+
+  /* 滚动淡入（克制：12px / 0.55s） */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 960px) {
+    .hero { padding: 56px 0 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .showcase { grid-template-columns: 1fr 1fr; }
+    .privacy-band { grid-template-columns: 1fr; padding: 32px; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 620px) {
+    section { padding: 60px 0; }
+    .feature { grid-template-columns: 1fr; }
+    .feature img { width: 132px; margin: 0 auto; }
+    .showcase { grid-template-columns: 1fr; }
+    .shot:nth-child(2) { margin-top: 0; }
+    .cta { padding: 60px 0 72px; }
+  }
 </style>
 </head>
 <body>
-<div>
-  <div style="font-weight:800;color:#c97b4a;letter-spacing:2px;">HairZen</div>
-  <div class="links">
-    <p><b>Privacy Notice / 隐私说明</b><br>
-      <a href="./privacy/index.html">中文</a> · <a href="./privacy/en.html">English</a> · <a href="./privacy/ja.html">日本語</a> · <a href="./privacy/ko.html">한국어</a> · <a href="./privacy/de.html">Deutsch</a> · <a href="./privacy/fr.html">Français</a></p>
-    <p><b>Technical Support / 技术支持</b><br>
-      <a href="./support/index.html">中文</a> · <a href="./support/en.html">English</a> · <a href="./support/ja.html">日本語</a> · <a href="./support/ko.html">한국어</a> · <a href="./support/de.html">Deutsch</a> · <a href="./support/fr.html">Français</a></p>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="./index.html" style="text-decoration:none;"><div class="logo">HairZen</div></a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="./support/index.html">Support</a>
+    </div>
+    <a class="lang-pill" href="./zh.html">中文</a>
+    <a class="nav-cta" href="https://apps.apple.com/app/id6824493624">Get the app</a>
   </div>
-</div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Personal AI hairstylist</p>
+      <h1>See the haircut before you sit in the chair.</h1>
+      <p class="lede">HairZen reads your face shape, then renders a real-looking hairstyle onto your own photo — so you decide first and book with confidence.</p>
+      <div class="actions">
+        <a class="btn-primary" href="https://apps.apple.com/app/id6824493624">Download on the App Store</a>
+        <a class="btn-ghost" href="#features">See what it does</a>
+      </div>
+      <div class="facts">
+        <span><i class="dot"></i>Free to try</span>
+        <span><i class="dot"></i>Runs on iPhone &amp; foldables</span>
+        <span><i class="dot"></i>Face scan stays on device</span>
+      </div>
+    </div>
+    <div class="hero-shot">
+      <img src="./assets/hero-duo.jpg" alt="HairZen on a foldable device" loading="eager">
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>A hairstyle assistant, not a filter.</h2>
+      <p>Every render is built for one decision: whether to actually make the change.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div>
+          <h3>Real results, not stickers</h3>
+          <p>A generative model repaints your own photo instead of pasting clip-art hair. Lighting, skin tone and hair texture stay consistent with the shot.</p>
+        </div>
+        <img src="./assets/shot-render.jpg" alt="AI render result" loading="lazy">
+      </div>
+      <div class="feature reveal">
+        <div>
+          <h3>Know your face shape first</h3>
+          <p>An on-device scan measures your proportions — jaw, cheekbones, hairline — then recommends styles that actually suit them.</p>
+        </div>
+        <img src="./assets/shot-scan.jpg" alt="Face shape analysis" loading="lazy">
+      </div>
+      <div class="feature reveal">
+        <div>
+          <h3>Browse before you book</h3>
+          <p>Curated libraries for women, men and playful looks, each with the reason it works — so the conversation at the salon starts from a clear idea.</p>
+        </div>
+        <img src="./assets/shot-gallery.jpg" alt="Hairstyle library" loading="lazy">
+      </div>
+      <div class="feature reveal">
+        <div>
+          <h3>See it in motion</h3>
+          <p>Turn a render into a short spin video to check how the length and color read from every angle — not just the front.</p>
+        </div>
+        <img src="./assets/shot-video.jpg" alt="Hairstyle video" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Three taps from photo to preview.</h2>
+      <p>Pick a style, keep the photo, and the result usually lands in a minute or two — it keeps running even if you leave the page.</p>
+    </div>
+    <div class="showcase">
+      <figure class="shot reveal">
+        <img src="./assets/shot-scan.jpg" alt="On-device face analysis" loading="lazy">
+        <figcaption>1 · Scan — local only</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="./assets/shot-progress.jpg" alt="Rendering in progress" loading="lazy">
+        <figcaption>2 · Render — a minute or two</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="./assets/shot-render.jpg" alt="Finished result" loading="lazy">
+        <figcaption>3 · Compare — save or tweak</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap">
+    <div class="privacy-band reveal">
+      <div>
+        <h2>Your face stays yours.</h2>
+        <p>Face detection and shape analysis run on your iPhone. A photo is uploaded only when you ask for a render, used only for that render, and not kept on our servers long-term.</p>
+        <a class="link-inline" href="./privacy/en.html">Read the privacy notice →</a>
+      </div>
+      <ul class="privacy-list">
+        <li><span>Local</span><span>Scan and analysis never leave the device</span></li>
+        <li><span>Opt-in</span><span>Upload happens only when you tap Generate</span></li>
+        <li><span>Ephemeral</span><span>Originals and results aren’t stored long-term</span></li>
+        <li><span>No training</span><span>Your photos are never used to train models</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap reveal">
+    <h2>Decide with your eyes, not your nerve.</h2>
+    <p>Try a style on your own photo first. Free to start, no subscription required.</p>
+    <a class="btn-primary" href="https://apps.apple.com/app/id6824493624">Download on the App Store</a>
+    <span class="store-note">iOS 17 or later · iPhone and foldable screens · 6 languages</span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="logo">HairZen</div>
+    <div class="foot-links">
+      <a href="./privacy/en.html">Privacy</a>
+      <a href="./support/en.html">Support</a>
+      <a href="mailto:ayningai@outlook.com">Contact</a>
+      <a href="./zh.html">中文</a>
+    </div>
+    <div>© 2026 HairZen</div>
+  </div>
+</footer>
+
 <script>
 (function () {
-  var l = (navigator.language || '').toLowerCase();
-  var lang = l.indexOf('zh') === 0 ? 'index.html'
-    : l.indexOf('ja') === 0 ? 'ja.html'
-    : l.indexOf('ko') === 0 ? 'ko.html'
-    : l.indexOf('de') === 0 ? 'de.html'
-    : l.indexOf('fr') === 0 ? 'fr.html'
-    : 'en.html';
-  var p = (location.pathname.split('/').pop() || 'index.html');
-  if (p === '' || p === 'index.html') location.replace('./privacy/' + lang);
+  var items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    for (var i = 0; i < items.length; i++) items[i].classList.add('in');
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  items.forEach(function (el) { io.observe(el); });
 })();
 </script>
 </body>
